@@ -44,7 +44,7 @@ apt-get -y install logstash
 #--------------------------------------------------
 
 #Iniciamos Elasticsearch
-systemctl status elasticsearch.service
+systemctl start elasticsearch.service
 
 #Paramos Kibana (en caso de encontrarse iniciado)
 systemctl stop kibana.service
