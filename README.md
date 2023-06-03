@@ -4,7 +4,7 @@ Proyecto que contiene los scripts encargados de la instalación de los aplicativ
 para el funcionamiento del Sistema Gestor de Logs.
 
 La instalación consistirá en dos partes: la primera la instalación de ELK (Elasticsearch, Kibana
-y Logstash) en Linux y la segunda la instalación de Winlogbeat en Windows.
+y Logstash) en Linux y la segunda la instalación de Winlogbeat en Windows. Es necesario dar permisos de ejecución a los scripts.
 
 ## Instalación de ELK en Debian Linux
 - Abrir terminal linux 
