@@ -11,10 +11,13 @@
 echo PRIMERA FASE: preparación de paquetes y conexiones
 echo --------------------------------------------------
 
-echo Importción de clave publica PGP de elasticsearch
-wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+echo Instalación de comando gpg en caso
+apt-get -y install gpg
 
-echoInstalación de paquete transport
+echo Importción de clave publica PGP de elasticsearch
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
+
+echo Instalación de paquete transport
 apt-get -y install apt-transport-https
 echo Se guarda el repositorio de elasticsearch
 echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
@@ -51,11 +54,11 @@ echo echo ------------------------------
 echo Iniciamos Elasticsearch
 systemctl start elasticsearch.service
 
-echo Paramos Kibana (en caso de encontrarse iniciado)
+echo Paramos Kibana
 systemctl stop kibana.service
 
 echo Generamos el enrollment token para conectar Elasticsearch con Kibana
-/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana --url "http://localhost:5601" > /tmp/enrollment_token
+/usr/share/elasticsearch/bin/elasticsearch-create-enrollment-token -s kibana > /tmp/enrollment_token
 echo El enrollment token se ha guardado temrporalmente en /tmp/enrollment_token. Si se reinicia el servidor, el enrollmento token se perderá
 
 echo Iniciamos Kibana 
@@ -66,7 +69,7 @@ systemctl start logstash.service
 
 echo Cambiamos password y la almacenamos en un fichero temporal
 # Esta clave se necesitará para comprobaciones y para acceder a Elastic
-/usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -s > /tmp/elasticpasswd
+yes | /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic -s > /tmp/elasticpasswd
 echo La password se ha guardado temrporalmente en /tmp/elasticpasswd. Si se reinicia el servidor, el fichero elasticpasswd se perderá
 
 echo Comprobamos elasticsearch con un curl
@@ -75,15 +78,3 @@ curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic:$PASS https://loca
 
 #Finalizamos el script
 exit 0
-
-
-
-
-
-
-
-
-
-
-
-
