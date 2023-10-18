@@ -1,4 +1,4 @@
-# Sistema_Gestor_de_Logs
+# Sistema_Gestor_de_Logs_y_Monitorización
 
 Proyecto que contiene los scripts encargados de la instalación de los aplicativos necesarios
 para el funcionamiento del Sistema Gestor de Logs.
